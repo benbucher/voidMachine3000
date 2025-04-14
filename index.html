@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Void Machine 3000</title>
+    <style>
+    body {
+        font-family: 'Press Start 2P', cursive;
+        text-align: center;
+        background: linear-gradient(45deg, #ff00ff, #00ffff);
+        margin: 0;
+        padding: 0;
+        color: white;
+    }
+
+    .machine {
+        width: 90%;
+        max-width: 400px;
+        background: linear-gradient(135deg, #ffcc00, #ff0066);
+        border-radius: 15px;
+        margin: 50px auto;
+        padding: 20px;
+        position: relative;
+        border: 5px solid #ffffff;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.9);
+        image-rendering: pixelated;
+    }
+
+    .vitrine {
+        width: 100%;
+        max-width: 350px;
+        height: auto;
+        background: url('https://source.unsplash.com/350x250/?pixel,retro') no-repeat center;
+        background-size: cover;
+        margin: 10px auto;
+        border: 5px solid #ffffff;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .objet {
+        width: 30%;
+        aspect-ratio: 1/1;
+        background: rgba(255, 255, 255, 0.9);
+        border: 3px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        cursor: pointer;
+        margin: 5px;
+        font-weight: bold;
+        color: black;
+        border-radius: 5px;
+        box-shadow: 0 4px 0px rgba(0, 0, 0, 1);
+        text-transform: uppercase;
+        image-rendering: pixelated;
+    }
+
+    .bouton {
+        margin-top: 20px;
+        padding: 12px 25px;
+        background: #00ffcc;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+        color: black;
+        border-radius: 10px;
+        box-shadow: 0 4px 0px rgba(0, 0, 0, 1);
+    }
+
+    #message {
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+        .objet {
+            width: 45%;
+            aspect-ratio: 1/1;
+            font-size: 10px;
+        }
+
+        .machine {
+            max-width: 320px;
+        }
+
+        .vitrine {
+            max-width: 300px;
+        }
+    }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <h1>Void Machine 3000</h1>
+    <div class="machine">
+        <div class="vitrine">
+            <div class="objet" onclick="acheter(this)">Sandwich Invisible</div>
+            <div class="objet" onclick="acheter(this)">Ticket Perdant</div>
+            <div class="objet" onclick="acheter(this)">Pile Vide</div>
+            <div class="objet" onclick="acheter(this)">CD Blanc</div>
+            <div class="objet" onclick="acheter(this)">Lunettes Floues</div>
+            <div class="objet" onclick="acheter(this)">Clé Inexistante</div>
+            <div class="objet" onclick="acheter(this)">Stylo Sans Encre</div>
+            <div class="objet" onclick="acheter(this)">Sac de Vent</div>
+            <div class="objet" onclick="acheter(this)">Balle Carrée</div>
+            <div class="objet" onclick="acheter(this)">Télécommande Universelle Sans Piles</div>
+        </div>
+        <button class="bouton" onclick="insererPiece()">Insérer une pièce</button>
+        <p id="message"></p>
+    </div>
+    <script>
+    let pieceInseree = false;
+
+    function insererPiece() {
+        pieceInseree = true;
+        document.getElementById('message').innerText = "Pièce insérée. Sélectionnez un objet.";
+    }
+
+    function acheter(element) {
+        if (!pieceInseree) {
+            document.getElementById('message').innerText = "Veuillez insérer une pièce avant d'acheter.";
+            return;
+        }
+        document.getElementById('message').innerText = "Vous avez reçu : " + element.innerText + ". Décevant, non ?";
+        pieceInseree = false;
+    }
+    </script>
+</body>
+
+</html>
