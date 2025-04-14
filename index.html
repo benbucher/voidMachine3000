@@ -6,6 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Void Machine 3000</title>
     <style>
+    @keyframes fall {
+        0% {
+            transform: translateY(-50px) scale(0.5);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes shake {
+
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-5px);
+        }
+
+        50% {
+            transform: translateX(5px);
+        }
+
+        75% {
+            transform: translateX(-5px);
+        }
+    }
+
     body {
         font-family: 'Press Start 2P', cursive;
         text-align: center;
@@ -13,6 +45,20 @@
         margin: 0;
         padding: 0;
         color: white;
+        overflow-y: auto;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        max-height: 90vh;
     }
 
     .machine {
@@ -20,28 +66,21 @@
         max-width: 400px;
         background: linear-gradient(135deg, #ffcc00, #ff0066);
         border-radius: 15px;
-        margin: 50px auto;
         padding: 20px;
         position: relative;
         border: 5px solid #ffffff;
         box-shadow: 0 0 20px rgba(255, 255, 255, 0.9);
-        image-rendering: pixelated;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .vitrine {
-        width: 100%;
-        max-width: 350px;
-        height: auto;
-        background: url('https://source.unsplash.com/350x250/?pixel,retro') no-repeat center;
-        background-size: cover;
-        margin: 10px auto;
-        border: 5px solid #ffffff;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
         align-items: center;
         padding: 10px;
-        box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
     }
 
     .objet {
@@ -52,19 +91,33 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 12px;
+        font-size: 10px;
         cursor: pointer;
         margin: 5px;
         font-weight: bold;
         color: black;
         border-radius: 5px;
-        box-shadow: 0 4px 0px rgba(0, 0, 0, 1);
         text-transform: uppercase;
-        image-rendering: pixelated;
+        text-align: center;
+        word-wrap: break-word;
+        padding: 5px;
+        transition: transform 0.2s;
+    }
+
+    .objet:active {
+        transform: scale(1.1);
+    }
+
+    .bouton-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        position: relative;
+        margin-bottom: 10px;
     }
 
     .bouton {
-        margin-top: 20px;
         padding: 12px 25px;
         background: #00ffcc;
         border: none;
@@ -73,29 +126,48 @@
         font-weight: bold;
         color: black;
         border-radius: 10px;
-        box-shadow: 0 4px 0px rgba(0, 0, 0, 1);
     }
 
     #message {
-        margin-top: 20px;
-        font-size: 16px;
-        font-weight: bold;
+        position: absolute;
+        top: -30px;
+        width: 200px;
+        text-align: center;
+        font-size: 12px;
+        color: white;
+        margin-top: 10px;
     }
 
-    @media (max-width: 600px) {
-        .objet {
-            width: 45%;
-            aspect-ratio: 1/1;
-            font-size: 10px;
-        }
+    #piece {
+        width: 30px;
+        height: 30px;
+        background: gold;
+        border-radius: 50%;
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: none;
+        animation: fall 0.5s ease-in-out;
+    }
 
-        .machine {
-            max-width: 320px;
-        }
-
-        .vitrine {
-            max-width: 300px;
-        }
+    #presentation {
+        width: 150px;
+        height: 150px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 10px;
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: none;
     }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -103,28 +175,49 @@
 
 <body>
     <h1>Void Machine 3000</h1>
-    <div class="machine">
-        <div class="vitrine">
-            <div class="objet" onclick="acheter(this)">Sandwich Invisible</div>
-            <div class="objet" onclick="acheter(this)">Ticket Perdant</div>
-            <div class="objet" onclick="acheter(this)">Pile Vide</div>
-            <div class="objet" onclick="acheter(this)">CD Blanc</div>
-            <div class="objet" onclick="acheter(this)">Lunettes Floues</div>
-            <div class="objet" onclick="acheter(this)">Clé Inexistante</div>
-            <div class="objet" onclick="acheter(this)">Stylo Sans Encre</div>
-            <div class="objet" onclick="acheter(this)">Sac de Vent</div>
-            <div class="objet" onclick="acheter(this)">Balle Carrée</div>
-            <div class="objet" onclick="acheter(this)">Télécommande Universelle Sans Piles</div>
+    <audio id="coinSound" src="coin-insert.mp3"></audio>
+    <audio id="vendSound" src="vend-item.mp3"></audio>
+    <div class="container">
+        <div class="machine" id="machine">
+            <div id="piece"></div>
+            <div class="vitrine">
+                <div class="objet" onclick="acheter(this)">Sandwich Invisible</div>
+                <div class="objet" onclick="acheter(this)">Ticket Perdant</div>
+                <div class="objet" onclick="acheter(this)">Pile Vide</div>
+                <div class="objet" onclick="acheter(this)">CD Blanc</div>
+                <div class="objet" onclick="acheter(this)">Lunettes Floues</div>
+                <div class="objet" onclick="acheter(this)">Clé Inexistante</div>
+            </div>
+            <div id="presentation"></div>
         </div>
-        <button class="bouton" onclick="insererPiece()">Insérer une pièce</button>
-        <p id="message"></p>
+        <div class="bouton-container">
+            <button class="bouton" onclick="insererPiece()">Insérer une pièce</button>
+            <p id="message"></p>
+        </div>
     </div>
     <script>
+    const coinSounds = [
+        new Audio("8bit-coin-1.mp3"),
+        new Audio("8bit-coin-2.mp3"),
+        new Audio("8bit-coin-3.mp3")
+    ];
+    const vendSounds = [
+        new Audio("8bit-vend-1.mp3"),
+        new Audio("8bit-vend-2.mp3"),
+        new Audio("8bit-vend-3.mp3")
+    ];
+
     let pieceInseree = false;
 
     function insererPiece() {
+        const sound = coinSounds[Math.floor(Math.random() * coinSounds.length)];
+        sound.play();
         pieceInseree = true;
         document.getElementById('message').innerText = "Pièce insérée. Sélectionnez un objet.";
+        document.getElementById('piece').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('piece').style.display = 'none';
+        }, 500);
     }
 
     function acheter(element) {
@@ -132,8 +225,23 @@
             document.getElementById('message').innerText = "Veuillez insérer une pièce avant d'acheter.";
             return;
         }
-        document.getElementById('message').innerText = "Vous avez reçu : " + element.innerText + ". Décevant, non ?";
+
+        const machine = document.getElementById('machine');
+        const presentation = document.getElementById('presentation');
+        const sound = vendSounds[Math.floor(Math.random() * vendSounds.length)];
+
+        sound.play();
+        presentation.innerText = element.innerText + "\nDécevant, non ?";
+        presentation.style.display = 'flex';
+        machine.style.animation = 'shake 0.3s ease-in-out';
+
+        setTimeout(() => {
+            presentation.style.display = 'none';
+            machine.style.animation = '';
+        }, 2000);
+
         pieceInseree = false;
+        document.getElementById('message').innerText = "";
     }
     </script>
 </body>
