@@ -1,291 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Void Machine 3000</title>
-    <style>
-    @keyframes shake {
-
-        0%,
-        100% {
-            transform: translateX(0);
-        }
-
-        25% {
-            transform: translateX(-5px);
-        }
-
-        50% {
-            transform: translateX(5px);
-        }
-
-        75% {
-            transform: translateX(-5px);
-        }
-    }
-
-    @keyframes blink {
-        50% {
-            opacity: 0.6;
-        }
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #121212;
-        margin: 0;
-        padding: 0;
-        color: #f0f0f0;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    h1 {
-        font-family: 'Press Start 2P', cursive;
-        color: #00ffcc;
-        margin-top: 30px;
-        margin-bottom: 10px;
-        font-size: 1.5rem;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-start;
-        margin-top: 20px;
-        gap: 30px;
-    }
-
-    .machine {
-        width: 300px;
-        background: #1e1e1e;
-        border-radius: 12px;
-        padding: 20px;
-        border: 2px solid #00ffcc;
-        box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .vitrine {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .objet {
-        width: 70px;
-        height: 70px;
-        background: #eeeeee;
-        border: 2px solid #222;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 10px;
-        cursor: pointer;
-        font-weight: bold;
-        color: #000;
-        border-radius: 6px;
-        text-align: center;
-        padding: 5px;
-        transition: transform 0.2s, background 0.3s;
-    }
-
-    .objet:hover {
-        background: #ddd;
-    }
-
-    .objet:active {
-        transform: scale(1.1);
-    }
-
-    .interface-droite {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .bouton {
-        padding: 12px 20px;
-        background: #00ffcc;
-        border: none;
-        font-size: 14px;
-        font-weight: bold;
-        color: #000;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-
-    .bouton:hover {
-        background: #00ddbb;
-    }
-
-    #message {
-        width: 180px;
-        height: 100px;
-        padding: 12px;
-        background: #002b29;
-        border-radius: 8px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        color: #00ffcc;
-        font-family: 'Courier New', Courier, monospace;
-        box-shadow: inset 0 0 5px #00ffcc;
-    }
-
-    #delivery {
-        position: relative;
-        margin-top: 20px;
-        width: 260px;
-        height: 100px;
-        background: #2a2a2a;
-        border: 2px dashed #00ffcc;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 8px;
-        padding: 5px;
-        overflow: hidden;
-    }
-
-    #delivered-item {
-        width: 70px;
-        height: 70px;
-        background: #eeeeee;
-        border: 2px solid #222;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        font-size: 10px;
-        font-weight: bold;
-        color: #000;
-        border-radius: 6px;
-        text-align: center;
-        padding: 5px;
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, -100px);
-        opacity: 0;
-    }
-
-    @keyframes dropIn {
-        0% {
-            transform: translate(-50%, -100px);
-            opacity: 0;
-        }
-
-        100% {
-            transform: translate(-50%, 0);
-            opacity: 1;
-        }
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    }
-    </style>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <h1>Void Machine 3000</h1>
     <audio id="coinSound" src="coin-insert.mp3"></audio>
     <audio id="vendSound" src="vend-item.mp3"></audio>
-    <div class="container">
-        <div class="machine" id="machine">
-            <div class="vitrine">
-                <div class="objet" onclick="acheter(this)">Sandwich Invisible</div>
-                <div class="objet" onclick="acheter(this)">Ticket Perdant</div>
-                <div class="objet" onclick="acheter(this)">Pile Vide</div>
-                <div class="objet" onclick="acheter(this)">CD Blanc</div>
-                <div class="objet" onclick="acheter(this)">Lunettes Floues</div>
-                <div class="objet" onclick="acheter(this)">Clé Inexistante</div>
-            </div>
-            <div id="delivery" class="delivery-slot">
-                <div id="delivered-item" class="objet"></div>
+    <div class="whole-hardware">
+        <div class="container">
+            <div class="machine" id="machine">
+                <div class="vitrine">
+                    <div class="objet" onclick="acheter(this)">Sandwich Invisible</div>
+                    <div class="objet" onclick="acheter(this)">Ticket Perdant</div>
+                    <div class="objet" onclick="acheter(this)">Pile Vide</div>
+                    <div class="objet" onclick="acheter(this)">CD Blanc</div>
+                    <div class="objet" onclick="acheter(this)">Lunettes Floues</div>
+                    <div class="objet" onclick="acheter(this)">Clé Inexistante</div>
+                    <div class="objet" onclick="acheter(this)">Ampoule Éteinte</div>
+                    <div class="objet" onclick="acheter(this)">Tasse Incomplète</div>
+                    <div class="objet" onclick="acheter(this)">Télécommande sans Boutons</div>
+                    <div class="objet" onclick="acheter(this)">Nuage Portatif</div>
+                    <div class="objet" onclick="acheter(this)">Boussole aléatoire</div>
+                    <div class="objet" onclick="acheter(this)">Notice d'Objet Inexistant</div>
+                    <div class="objet" onclick="acheter(this)">Page Blanche Froissée</div>
+                    <div class="objet" onclick="acheter(this)">Mini Trappe à Rien</div>
+                    <div class="objet" onclick="acheter(this)">Bouton sans Action</div>
+                    <div class="objet" onclick="acheter(this)">Fragment de Silence</div>
+                    <div class="objet" onclick="acheter(this)">Pixel Orphelin</div>
+                    <div class="objet" onclick="acheter(this)">Chaise Imaginaire</div>
+                    <div class="objet" onclick="acheter(this)">Heure Perdue</div>
+                    <div class="objet" onclick="acheter(this)">Objet Non Détecté</div>
+                    <div class="objet" onclick="acheter(this)">Rien de Précieux</div>
+                </div>
+                <div id="delivery" class="delivery-slot">
+                    <div id="delivered-item" class="objet"></div>
+                </div>
             </div>
         </div>
         <div class="interface-droite">
             <div style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
-                <div id="credit-display" style="min-width: 140px; height: 46px; background: #002b29; color: #00ffcc; font-family: 'Courier New', Courier, monospace; font-size: 12px; display: flex; align-items: center; justify-content: center; border-radius: 8px; box-shadow: inset 0 0 5px #00ffcc;">Crédit: 0</div>
+                <div id="credit-display">Crédit: 0</div>
                 <button class="bouton" onclick="insererPiece()">Insérer une pièce</button>
             </div>
             <p id="message">Insérez une pièce et sélectionnez un objet.</p>
         </div>
     </div>
-    <script>
-    const coinSounds = [
-        new Audio("8bit-coin-1.mp3"),
-        new Audio("8bit-coin-2.mp3"),
-        new Audio("8bit-coin-3.mp3")
-    ];
-    const vendSounds = [
-        new Audio("8bit-vend-1.mp3"),
-        new Audio("8bit-vend-2.mp3"),
-        new Audio("8bit-vend-3.mp3")
-    ];
-
-    let credit = 0;
-
-    function insererPiece() {
-        const sound = coinSounds[Math.floor(Math.random() * coinSounds.length)];
-        sound.play();
-        credit++;
-        document.getElementById("credit-display").innerText = `Crédit: ${credit}`;
-    }
-
-    function acheter(element) {
-        if (credit <= 0) {
-            document.getElementById("message").innerText = "Veuillez insérer une pièce avant d'acheter.";
-            return;
-        }
-
-        const machine = document.getElementById("machine");
-        const presentation = document.getElementById("presentation");
-        const sound = vendSounds[Math.floor(Math.random() * vendSounds.length)];
-
-        sound.play();
-        const delivered = document.getElementById("delivered-item");
-        delivered.innerText = element.innerText;
-        delivered.style.display = "flex";
-        delivered.style.opacity = "0";
-        delivered.style.transform = "translate(-50%, -100px)";
-        delivered.style.animation = "none";
-        delivered.offsetHeight;
-        delivered.style.animation = "dropIn 0.6s ease-out forwards";
-        machine.style.animation = "shake 0.3s ease-in-out";
-
-        const deceptions = [
-            "Tu pensais vraiment que ça changerait quelque chose ?",
-            "Analyse de ta décision : incohérente mais humaine.",
-            "Ce n’est pas recyclable.",
-            "Produit expiré avant d’exister.",
-            "Cette clé n’ouvre rien, mais elle ferme un peu.",
-            "Ce ticket donne accès à une attente.",
-            "Décevant, non ?"
-        ];
-        document.getElementById("message").innerText = deceptions[Math.floor(Math.random() * deceptions.length)];
-
-        machine.style.animation = "";
-
-        credit--;
-        document.getElementById("credit-display").innerText = `Crédit: ${credit}`;
-    }
-    </script>
+    <script src="script.js"></script>
 </body>
-
 </html>
