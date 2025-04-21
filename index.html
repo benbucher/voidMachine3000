@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <h1>Void Machine 3000</h1>
     <audio id="coinSound" src="coin-insert.mp3"></audio>
@@ -43,7 +45,7 @@
             </div>
         </div>
         <div class="interface-droite">
-            <div style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
+            <div class="controls-container">
                 <div id="credit-display">Crédit: 0</div>
                 <button class="bouton" onclick="insererPiece()">Insérer une pièce</button>
             </div>
@@ -52,4 +54,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
