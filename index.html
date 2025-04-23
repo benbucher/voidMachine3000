@@ -7,13 +7,13 @@
     <title>Void Machine 3000</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <audio id="coinSound" src="coin-insert.mp3"></audio>
+    <audio id="vendSound" src="vend-item.mp3"></audio>    
 </head>
 
 <body>
     <div class="global-container">
         <h1>Void Machine 3000</h1>
-        <audio id="coinSound" src="coin-insert.mp3"></audio>
-        <audio id="vendSound" src="vend-item.mp3"></audio>
         <div class="whole-hardware">
             <div class="machine" id="machine">
                 <div class="vitrine">
@@ -37,7 +37,7 @@
                     <div class="objet" onclick="acheter(this)">Chaise Imaginaire</div>
                     <div class="objet" onclick="acheter(this)">Heure Perdue</div>
                     <div class="objet" onclick="acheter(this)">Objet Non Détecté</div>
-                    <div class="objet" onclick="acheter(this)">Rien de Précieux</div>
+                    <div class="objet" onclick="acheter(this)">Rien de Précieux</div> 
                 </div>
                 <div id="delivery" class="delivery-slot">
                     <div id="delivered-item" class="objet"></div>

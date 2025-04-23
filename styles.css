@@ -68,7 +68,7 @@ h1 {
     box-sizing: border-box;
     max-width: 600px;
     justify-content: center;
-    height: calc(100% - 70px);
+    min-height: 0; /* this line enables to have a scroll in the child class in vitrine */
 }
 
 
@@ -245,7 +245,6 @@ h1 {
     .whole-hardware {
         flex-direction: column-reverse;
         max-width: 300px;
-        height: calc(100% - 50px);
     }
 
 }
